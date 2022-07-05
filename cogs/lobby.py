@@ -76,7 +76,7 @@ class Lobby(commands.Cog):
         
         embed.set_footer(text="No Participants, yet.")
 
-        msg = await inter.channel.send(embed=embed)
+        msg = await inter.channel.send("<@&711263948674170890>", embed=embed)
 
         await inter.edit_original_message("Lobby was created!")
 
