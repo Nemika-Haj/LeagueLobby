@@ -65,7 +65,7 @@ class Lobby(commands.Cog):
             description=f"{inter.author.mention} is hosting a **{team_size}v{team_size} Game**! React below with \➕ to participate! Teams will be created randomly once all slots are filled."
         )
 
-        embed.add_field("⌛ Expiration", "This lobby expires in <t:" + round((datetime.now()+timedelta(minutes=30)).timestamp()).__str__() + ":R>.")
+        embed.add_field("⌛ Expiration", "This lobby expires <t:" + round((datetime.now()+timedelta(minutes=30)).timestamp()).__str__() + ":R>.")
         
         embed.set_footer(text="No Participants, yet.")
 
