@@ -49,14 +49,21 @@ class Lobby(commands.Cog):
                 type=disnake.OptionType.integer,
                 min_value=1,
                 max_value=5,
+            ),
+            disnake.Option(
+                name="expiration",
+                description="Expiration time for the lobby. Default: 30 mins",
+                type=disnake.OptionType.integer,
+                min_value=5
             )
         ]
     )
-    async def create_lobby(self, inter:disnake.CommandInteraction, team_size=5):
+    async def create_lobby(self, inter:disnake.CommandInteraction, team_size=5, expiration=30):
         if inter.author.id in self.lobbies:
             return await inter.send("You already have a lobby! Wait for it to expire.")
 
         team_size = int(team_size)
+        expiration = int(expiration)
 
         await inter.send("Creating lobby...", ephemeral=True)
         
@@ -65,7 +72,7 @@ class Lobby(commands.Cog):
             description=f"{inter.author.mention} is hosting a **{team_size}v{team_size} Game**! React below with \➕ to participate! Teams will be created randomly once all slots are filled."
         )
 
-        embed.add_field("⌛ Expiration", "This lobby expires <t:" + round((datetime.now()+timedelta(minutes=30)).timestamp()).__str__() + ":R>.")
+        embed.add_field("⌛ Expiration", "This lobby expires <t:" + round((datetime.now()+timedelta(minutes=expiration)).timestamp()).__str__() + ":R>.")
         
         embed.set_footer(text="No Participants, yet.")
 
@@ -84,7 +91,7 @@ class Lobby(commands.Cog):
             reaction, _ = await self.bot.wait_for(
                 'reaction_add',
                 check=lambda r,_: r.message.id == msg.id and r.emoji == "➕" and r.count == team_size*2+1,
-                timeout=60*30
+                timeout=60*expiration
             )
         except asyncio.TimeoutError:
             return await msg.edit("Lobby was closed due to missing slots.", embed=None)
