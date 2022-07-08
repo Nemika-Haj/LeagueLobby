@@ -42,7 +42,7 @@ class Lobby(commands.Cog):
     @commands.slash_command(
         name="create_lobby",
         description="Create a new league of legends lobby.",
-        choices=[
+        options=[
             disnake.Option(
                 name="team_size",
                 description="Team size for the lobby. Default: 5",
