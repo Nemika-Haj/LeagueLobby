@@ -55,10 +55,21 @@ class Lobby(commands.Cog):
                 description="Expiration time for the lobby. Default: 30 mins",
                 type=disnake.OptionType.integer,
                 min_value=5
+            ),
+            disnake.Option(
+                name="mode",
+                description="The mode the game will take place!",
+                type=disnake.OptionType.string,
+                required=True,
+                choices=[
+                    disnake.OptionChoice(name="aram", value="❄️ ARAM ❄️"),
+                    disnake.OptionChoice(name="rift", value="🌍 SUMMONER'S RIFT 🌍"),
+                    disnake.OptionChoice(name="twisted_treeline", value="👀 FAHD'S BASEMENT 👀")
+                ]
             )
         ]
     )
-    async def create_lobby(self, inter:disnake.CommandInteraction, team_size=5, expiration=30):
+    async def create_lobby(self, inter:disnake.CommandInteraction, mode, team_size=5, expiration=30):
         if inter.author.id in self.lobbies:
             return await inter.send("You already have a lobby! Wait for it to expire.")
 
@@ -73,6 +84,7 @@ class Lobby(commands.Cog):
         )
 
         embed.add_field("⌛ Expiration", "This lobby expires <t:" + round((datetime.now()+timedelta(minutes=expiration)).timestamp()).__str__() + ":R>.")
+        embed.add_field("🗺️ MODE", mode)
         
         embed.set_footer(text="No Participants, yet.")
 
