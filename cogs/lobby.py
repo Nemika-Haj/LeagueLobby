@@ -44,6 +44,17 @@ class Lobby(commands.Cog):
         description="Create a new league of legends lobby.",
         options=[
             disnake.Option(
+                name="mode",
+                description="The mode the game will take place!",
+                type=disnake.OptionType.string,
+                required=True,
+                choices=[
+                    disnake.OptionChoice(name="aram", value="❄️ ARAM ❄️"),
+                    disnake.OptionChoice(name="rift", value="🌍 SUMMONER'S RIFT 🌍"),
+                    disnake.OptionChoice(name="twisted_treeline", value="👀 FAHD'S BASEMENT 👀")
+                ]
+            ),
+            disnake.Option(
                 name="team_size",
                 description="Team size for the lobby. Default: 5",
                 type=disnake.OptionType.integer,
@@ -55,17 +66,6 @@ class Lobby(commands.Cog):
                 description="Expiration time for the lobby. Default: 30 mins",
                 type=disnake.OptionType.integer,
                 min_value=5
-            ),
-            disnake.Option(
-                name="mode",
-                description="The mode the game will take place!",
-                type=disnake.OptionType.string,
-                required=True,
-                choices=[
-                    disnake.OptionChoice(name="aram", value="❄️ ARAM ❄️"),
-                    disnake.OptionChoice(name="rift", value="🌍 SUMMONER'S RIFT 🌍"),
-                    disnake.OptionChoice(name="twisted_treeline", value="👀 FAHD'S BASEMENT 👀")
-                ]
             )
         ]
     )
